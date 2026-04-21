@@ -10,9 +10,13 @@ let enemyOrangeCol = 4; // What column the orange enemy will spawn
 let enemyPinkRow = 0; // What row the white enemy will spawn
 let enemyPinkCol = 0; // What column the white enemy will spawn
 let redInterval;
+let greyInterval;
+
 let container = document.getElementById("container"); // This is getting the container id that will be used later to hide the rules
 
 function play() {
+  clearInterval(redInterval);
+  clearInterval(greyInterval);  
   // This function is used when you click play everthing will start
   container.style.display = "none";
 
@@ -25,8 +29,8 @@ function play() {
   enemyOrange();
   enemyGrey();
   enemyRed();
+  greyInterval = setInterval(enemyGreyMovement, 700);
   redInterval = setInterval(enemyRedMovement, 700);
-  document.addEventListener("keydown", playerMove); // This event is used when you press down a key
 };
 
 function updateHearts() {
@@ -41,6 +45,9 @@ function updateHearts() {
 
   heartsDiv.innerHTML = `<p>${heartDisplay}</p>`;
 }
+
+
+document.addEventListener("keydown", playerMove); // This event is used when you press down a key
 
 function playerMove(event) {
   // This function is used when
@@ -125,7 +132,23 @@ function enemyGrey() {
 };
 
 function enemyGreyMovement() {
+  let direction = Math.floor(Math.random() * 4);
 
+  if(direction === 0 && enemyGreyRow > 0){
+    enemyGreyRow--;
+    console.log("up");
+  } else if (direction === 1 && enemyGreyRow < 4) {
+    console.log("down");
+    enemyGreyRow++;
+  } else if (direction === 2 && enemyGreyCol > 0){
+    console.log("left");
+    enemyGreyCol--;
+  } else if (direction === 3 && enemyGreyCol < 4){
+    console.log("right")
+    enemyGreyCol++;
+  }
+  
+  enemyGrey();
 };
 
 function enemyRed() {
@@ -143,7 +166,6 @@ function enemyRed() {
 };
 
 function enemyRedMovement() {
-  console.log("enemyRedMovement");
   if (enemyRedRow < playerRow) {
     enemyRedRow++;
   } else if (enemyRedRow > playerRow) {
@@ -163,6 +185,11 @@ function enemyRedMovement() {
 function enemyHit() {
   if (playerRow === enemyRedRow && playerCol === enemyRedCol) {
     lives--;
+
+    if(lives <= 0){
+      gameOver();
+    };
+
     updateHearts();
     enemyRedRow = 4;
     enemyRedCol = 4;
@@ -171,8 +198,45 @@ function enemyHit() {
     clearInterval(redInterval);
     setTimeout(() => (redInterval = setInterval(enemyRedMovement, 600)), 1180);
   };
+
+  if (playerRow === enemyGreyRow && playerCol === enemyGreyCol) {
+    lives--;
+
+    if(lives <= 0){
+      gameOver();
+    };
+
+    updateHearts();
+    enemyGreyRow = 4;
+    enemyGreyCol = 0;
+
+    setTimeout(() => enemyGrey(), 700);
+    clearInterval(greyInterval);
+    setTimeout(() => (greyInterval = setInterval(enemyGreyMovement, 600)), 1180);
+  };
 };
 
 function gameOver(){
-  
+  clearInterval(redInterval);
+  clearInterval(greyInterval);
+
+  document.getElementById("grid").style.display = "none";
+  document.getElementById("gameOver").style.display = "block";
+}
+
+function restartGame(){
+  playerRow = 2;
+  playerCol = 2;
+
+  enemyRedRow = 4;
+  enemyRedCol = 4;
+
+  enemyGreyRow = 4;
+  enemyGreyCol = 0;
+
+  document.getElementById("gameOver").style.display = "none";
+
+  document.getElementById("grid").style.display = "grid";
+
+  play();
 }

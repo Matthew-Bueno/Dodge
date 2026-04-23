@@ -11,6 +11,7 @@ let enemyPinkRow = 0; // What row the white enemy will spawn
 let enemyPinkCol = 0; // What column the white enemy will spawn
 let redInterval;
 let greyInterval;
+let orangeInterval;
 
 let container = document.getElementById("container"); // This is getting the container id that will be used later to hide the rules
 
@@ -31,6 +32,7 @@ function play() {
   enemyRed();
   greyInterval = setInterval(enemyGreyMovement, 700);
   redInterval = setInterval(enemyRedMovement, 700);
+  orangeInterval = setInterval(enemyOrangeMovement, 700);
 };
 
 function updateHearts() {
@@ -96,7 +98,16 @@ function enemyPink() {
 };
 
 function enemyPinkMovment(){
+/*   let direction = Math.floor(Math.random() * 8);
 
+  if (direction === 0 && enemyPinkRow > 0){
+    enemyPinkRow--;
+  } else if (enemyPinkRow > 1 && enemyPinkCol < 4){
+    enemyPinkRow--;
+    enemyPinkCol++;
+  } else if (direction === 1){
+
+  } */
 };
 
 function enemyOrange() {
@@ -113,8 +124,31 @@ function enemyOrange() {
   enemyOrange.style.transform = `translate(${enemyOrangeCol * enemyOrangecellWidth + offsetX}px, ${enemyOrangeRow * enemyOrangecellHeight + offsetY}px)`;
 };
 
-function enemyOrangeMovment(){
+function enemyOrangeMovement(){ // Enemy Orange movement
+  let direction = Math.floor(Math.random() * 4);
 
+  if(direction === 0){
+    if(enemyOrangeRow > 0 && enemyOrangeCol < 4){
+      enemyOrangeRow--;
+      enemyOrangeCol++;
+    }
+  } else if (direction === 1){
+    if(enemyOrangeRow < 4 && enemyOrangeCol < 4){
+      enemyOrangeRow++;
+      enemyOrangeCol++;
+    }
+  } else if(direction === 2){
+    if(enemyOrangeRow > 0 && enemyOrangeCol > 0){
+      enemyOrangeRow--;
+      enemyOrangeCol--;
+    }
+  } else if(direction === 3){
+    if (enemyOrangeRow < 4 && enemyOrangeCol > 0){
+      enemyOrangeRow++;
+      enemyOrangeCol--;
+    }
+  }
+  enemyOrange();
 };
 
 function enemyGrey() {
@@ -131,20 +165,16 @@ function enemyGrey() {
   enemyGrey.style.transform = `translate(${enemyGreyCol * enemyGreycellWidth + offsetX}px, ${enemyGreyRow * enemyGreycellHeight + offsetY}px)`;
 };
 
-function enemyGreyMovement() {
+function enemyGreyMovement() { // enemy grey movement
   let direction = Math.floor(Math.random() * 4);
 
   if(direction === 0 && enemyGreyRow > 0){
     enemyGreyRow--;
-    console.log("up");
   } else if (direction === 1 && enemyGreyRow < 4) {
-    console.log("down");
     enemyGreyRow++;
   } else if (direction === 2 && enemyGreyCol > 0){
-    console.log("left");
     enemyGreyCol--;
   } else if (direction === 3 && enemyGreyCol < 4){
-    console.log("right")
     enemyGreyCol++;
   }
   
@@ -165,7 +195,7 @@ function enemyRed() {
   enemyRed.style.transform = `translate(${enemyRedCol * enemyRedcellWidth + offsetX}px, ${enemyRedRow * enemyRedcellHeight + offsetY}px)`;
 };
 
-function enemyRedMovement() {
+function enemyRedMovement() { // enemy red movement
   if (enemyRedRow < playerRow) {
     enemyRedRow++;
   } else if (enemyRedRow > playerRow) {
@@ -179,10 +209,10 @@ function enemyRedMovement() {
   };
 
   enemyRed();
-  setTimeout(() => enemyHit(), 1180);
+  setTimeout(() => enemyHit(), 1000);
 };
 
-function enemyHit() {
+function enemyHit() { // when enemy hits you
   if (playerRow === enemyRedRow && playerCol === enemyRedCol) {
     lives--;
 
@@ -196,7 +226,7 @@ function enemyHit() {
 
     setTimeout(() => enemyRed(), 700);
     clearInterval(redInterval);
-    setTimeout(() => (redInterval = setInterval(enemyRedMovement, 600)), 1180);
+    setTimeout(() => (redInterval = setInterval(enemyRedMovement, 600)), 1900);
   };
 
   if (playerRow === enemyGreyRow && playerCol === enemyGreyCol) {
@@ -212,13 +242,30 @@ function enemyHit() {
 
     setTimeout(() => enemyGrey(), 700);
     clearInterval(greyInterval);
-    setTimeout(() => (greyInterval = setInterval(enemyGreyMovement, 600)), 1180);
+    setTimeout(() => (greyInterval = setInterval(enemyGreyMovement, 800)), 1800);
+  };
+
+  if (playerRow === enemyOrangeRow && playerCol === enemyOrangeCol) {
+    lives--;
+
+    if(lives <= 0){
+      gameOver();
+    };
+
+    updateHearts();
+    enemyOrangeRow = 0;
+    enemyOrangeCol = 4;
+
+    setTimeout(() => enemyOrange(), 700);
+    clearInterval(orangeInterval);
+    setTimeout(() => (orangeInterval = setInterval(enemyOrangeMovement, 800)), 1800);
   };
 };
 
 function gameOver(){
   clearInterval(redInterval);
   clearInterval(greyInterval);
+  clearInterval(orangeInterval);
 
   document.getElementById("grid").style.display = "none";
   document.getElementById("gameOver").style.display = "block";

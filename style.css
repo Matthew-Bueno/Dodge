@@ -94,7 +94,7 @@ button{
     height: 20px;
     background: orange;
     border-radius: 50px;
-    transition: all 0.8s ease;
+    transition: all 0.6s ease;
 }
 
 #enemyPink{

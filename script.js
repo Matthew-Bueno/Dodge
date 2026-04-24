@@ -12,7 +12,7 @@ let enemyPinkCol = 0; // What column the white enemy will spawn
 let redInterval;
 let greyInterval;
 let orangeInterval;
-
+let playerHitTimeout;
 let container = document.getElementById("container"); // This is getting the container id that will be used later to hide the rules
 
 function play() {
@@ -64,7 +64,8 @@ function playerMove(event) {
   }
 
   updatePlayerPosition();
-  setTimeout(() => enemyHit(), 400);
+  console.log('player')
+  let playerHitTimeout = setTimeout(() => enemyHit(), 400);
 }
 function updatePlayerPosition() {
   const player = document.getElementById("player");
@@ -115,7 +116,7 @@ function enemyOrangeMovement() {
   let direction = Math.floor(Math.random() * 4);
   //TODO: check if move is valid (within board) before changing row & col
   // if not valid generate new random direction
-  console.log("direction", direction);
+  // console.log("direction", direction);
 
   if (direction === 0) {
     if (enemyOrangeRow > 0 && enemyOrangeCol < 4) {
@@ -140,6 +141,7 @@ function enemyOrangeMovement() {
   }
 
   enemyOrange();
+    console.log('orange')
   setTimeout(() => enemyHit(), 600);
 }
 
@@ -172,6 +174,7 @@ function enemyGreyMovement() {
   }
 
   enemyGrey();
+    console.log('grey')
   setTimeout(() => enemyHit(), 800);
 }
 
@@ -190,6 +193,7 @@ function enemyRed() {
 }
 
 function enemyRedMovement() {
+
   // enemy red movement
   if (enemyRedRow < playerRow) {
     enemyRedRow++;
@@ -204,10 +208,12 @@ function enemyRedMovement() {
   }
 
   enemyRed();
+    console.log('red')
   setTimeout(() => enemyHit(), 1000);
 }
 
 function enemyHit() {
+  console.log("enemyHit")
   // when enemy hits you
   let redHit = playerRow === enemyRedRow && playerCol === enemyRedCol;
   let greyHit = playerRow === enemyGreyRow && playerCol === enemyGreyCol;
@@ -223,6 +229,7 @@ function enemyHit() {
       clearInterval(redInterval);
       clearInterval(orangeInterval);
       clearInterval(greyInterval);
+      clearTimeout(playerHitTimeout)
 
       enemyRedRow = 4;
       enemyRedCol = 4;

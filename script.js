@@ -1,12 +1,12 @@
 let lives = 3; // This is how many lives you will have
-let playerRow = 2; // What row the player will spawns
-let playerCol = 2; //  What column the player will spawn
-let enemyRedRow = 4; // What row the red enemy will spawn
-let enemyRedCol = 4; // What column the red enemy will spawn
-let enemyGreyRow = 4; // What row the green enemy will spawn
+let playerRow = 3; // What row the player will spawns
+let playerCol = 3; //  What column the player will spawn
+let enemyRedRow = 6; // What row the red enemy will spawn
+let enemyRedCol = 6; // What column the red enemy will spawn
+let enemyGreyRow = 6; // What row the green enemy will spawn
 let enemyGreyCol = 0; // What column the green enemy will spawn
 let enemyOrangeRow = 0; // What row the orange enemy will spawn
-let enemyOrangeCol = 4; // What column the orange enemy will spawn
+let enemyOrangeCol = 6; // What column the orange enemy will spawn
 let enemyPinkRow = 0; // What row the white enemy will spawn
 let enemyPinkCol = 0; // What column the white enemy will spawn
 let redInterval;
@@ -30,10 +30,18 @@ function play() {
   enemyOrange();
   enemyGrey();
   enemyRed();
-  greyInterval = setInterval(enemyGreyMovement, 800);
-  redInterval = setInterval(enemyRedMovement, 800);
-  orangeInterval = setInterval(enemyOrangeMovement, 800);
+  greyInterval = setInterval(enemyGreyMovement, 400);
+  redInterval = setInterval(enemyRedMovement, 700);
+  orangeInterval = setInterval(enemyOrangeMovement, 500);
   document.addEventListener("keydown", playerMove); // This event is used when you press down a key
+}
+
+function enemyInfo(){
+  document.getElementById("overlay").style.display = "flex";
+}
+
+function closeEnemyInfo(){
+  document.getElementById("overlay").style.display = "none";
 }
 
 function updateHearts() {
@@ -56,11 +64,11 @@ function playerMove(event) {
   if (key === "w" || key === "arrowup") {
     if (playerRow > 0) playerRow--;
   } else if (key === "s" || key === "arrowdown") {
-    if (playerRow < 4) playerRow++;
+    if (playerRow < 6) playerRow++;
   } else if (key === "a" || key === "arrowleft") {
     if (playerCol > 0) playerCol--;
   } else if (key === "d" || key === "arrowright") {
-    if (playerCol < 4) playerCol++;
+    if (playerCol < 6) playerCol++;
   }
 
   updatePlayerPosition();
@@ -70,8 +78,8 @@ function playerMove(event) {
 function updatePlayerPosition() {
   const player = document.getElementById("player");
 
-  const cellWidth = 130;
-  const cellHeight = 110;
+  const cellWidth = 100;
+  const cellHeight = 100;
 
   const playerSize = 20;
 
@@ -84,8 +92,8 @@ function updatePlayerPosition() {
 function enemyPink() {
   const enemyPink = document.getElementById("enemyPink");
 
-  const enemyPinkcellWidth = 130;
-  const enemyPinkcellHeight = 110;
+  const enemyPinkcellWidth = 100;
+  const enemyPinkcellHeight = 100;
 
   const enemyPinkSize = 20;
 
@@ -95,13 +103,15 @@ function enemyPink() {
   enemyPink.style.transform = `translate(${enemyPinkCol * enemyPinkcellWidth + offsetX}px, ${enemyPinkRow * enemyPinkcellHeight + offsetY}px)`;
 }
 
-function enemyPinkMovment() {}
+function enemyPinkMovment() {
+  
+}
 
 function enemyOrange() {
   const enemyOrange = document.getElementById("enemyOrange");
 
-  const enemyOrangecellWidth = 130;
-  const enemyOrangecellHeight = 110;
+  const enemyOrangecellWidth = 100;
+  const enemyOrangecellHeight = 100;
 
   const enemyOrangeSize = 20;
 
@@ -119,12 +129,12 @@ function enemyOrangeMovement() {
   // console.log("direction", direction);
 
   if (direction === 0) {
-    if (enemyOrangeRow > 0 && enemyOrangeCol < 4) {
+    if (enemyOrangeRow > 0 && enemyOrangeCol < 6) {
       enemyOrangeRow--;
       enemyOrangeCol++;
     }else enemyOrangeMovement()
   } else if (direction === 1) {
-    if (enemyOrangeRow < 4 && enemyOrangeCol < 4) {
+    if (enemyOrangeRow < 6 && enemyOrangeCol < 6) {
       enemyOrangeRow++;
       enemyOrangeCol++;
     } else enemyOrangeMovement()
@@ -134,7 +144,7 @@ function enemyOrangeMovement() {
       enemyOrangeCol--;
      }else enemyOrangeMovement()
   } else if (direction === 3) {
-    if (enemyOrangeRow < 4 && enemyOrangeCol > 0) {
+    if (enemyOrangeRow < 6 && enemyOrangeCol > 0) {
       enemyOrangeRow++;
       enemyOrangeCol--;
      }else enemyOrangeMovement()
@@ -142,14 +152,14 @@ function enemyOrangeMovement() {
 
   enemyOrange();
     console.log('orange')
-  setTimeout(() => enemyHit(), 600);
+  setTimeout(() => enemyHit(), 800);
 }
 
 function enemyGrey() {
   const enemyGrey = document.getElementById("enemyGrey");
 
-  const enemyGreycellWidth = 130;
-  const enemyGreycellHeight = 110;
+  const enemyGreycellWidth = 100;
+  const enemyGreycellHeight = 100;
 
   const enemyGreySize = 20;
 
@@ -159,17 +169,16 @@ function enemyGrey() {
   enemyGrey.style.transform = `translate(${enemyGreyCol * enemyGreycellWidth + offsetX}px, ${enemyGreyRow * enemyGreycellHeight + offsetY}px)`;
 }
 
-function enemyGreyMovement() {
-  // enemy grey movement
+function enemyGreyMovement() { // enemy grey movement
   let direction = Math.floor(Math.random() * 4);
 
   if (direction === 0 && enemyGreyRow > 0) {
     enemyGreyRow--;
-  } else if (direction === 1 && enemyGreyRow < 4) {
+  } else if (direction === 1 && enemyGreyRow < 6) {
     enemyGreyRow++;
   } else if (direction === 2 && enemyGreyCol > 0) {
     enemyGreyCol--;
-  } else if (direction === 3 && enemyGreyCol < 4) {
+  } else if (direction === 3 && enemyGreyCol < 6) {
     enemyGreyCol++;
   }
 
@@ -181,8 +190,8 @@ function enemyGreyMovement() {
 function enemyRed() {
   const enemyRed = document.getElementById("enemyRed");
 
-  const enemyRedcellWidth = 130;
-  const enemyRedcellHeight = 110;
+  const enemyRedcellWidth = 100;
+  const enemyRedcellHeight = 100;
 
   const enemyRedSize = 20;
 
@@ -192,9 +201,7 @@ function enemyRed() {
   enemyRed.style.transform = `translate(${enemyRedCol * enemyRedcellWidth + offsetX}px, ${enemyRedRow * enemyRedcellHeight + offsetY}px)`;
 }
 
-function enemyRedMovement() {
-
-  // enemy red movement
+function enemyRedMovement() { // enemy red movement
   if (enemyRedRow < playerRow) {
     enemyRedRow++;
   } else if (enemyRedRow > playerRow) {
@@ -231,17 +238,17 @@ function enemyHit() {
       clearInterval(greyInterval);
       clearTimeout(playerHitTimeout)
 
-      enemyRedRow = 4;
-      enemyRedCol = 4;
+      enemyRedRow = 6;
+      enemyRedCol = 6;
 
-      enemyGreyRow = 4;
+      enemyGreyRow = 6;
       enemyGreyCol = 0;
 
       enemyOrangeRow = 0;
-      enemyOrangeCol = 4;
+      enemyOrangeCol = 6;
 
-      playerCol = 2;
-      playerRow = 2;
+      playerCol = 3;
+      playerRow = 3;
 
       setTimeout(() => {
         enemyRed();
@@ -255,15 +262,15 @@ function enemyHit() {
       setTimeout(() => document.addEventListener("keydown", playerMove), 400);
 
       setTimeout(
-        () => (redInterval = setInterval(enemyRedMovement, 800)),
+        () => (redInterval = setInterval(enemyRedMovement, 700)),
         2000,
       );
       setTimeout(
-        () => (greyInterval = setInterval(enemyGreyMovement, 800)),
+        () => (greyInterval = setInterval(enemyGreyMovement, 400)),
         1800,
       );
       setTimeout(
-        () => (orangeInterval = setInterval(enemyOrangeMovement, 800)),
+        () => (orangeInterval = setInterval(enemyOrangeMovement, 500)),
         1800,
       );
     }
@@ -286,24 +293,22 @@ function gameOver() {
 
 function restartGame() {
   console.log("restart game");
-  playerRow = 2;
-  playerCol = 2;
+  playerRow = 3;
+  playerCol = 3;
 
-  enemyRedRow = 4;
-  enemyRedCol = 4;
+  enemyRedRow = 6;
+  enemyRedCol = 6;
 
-  enemyGreyRow = 4;
+  enemyGreyRow = 6;
   enemyGreyCol = 0;
 
   enemyOrangeRow = 0;
-  enemyOrangeCol = 4;
+  enemyOrangeCol = 6;
 
   enemyPinkRow = 0;
   enemyPinkCol = 0;
 
   document.getElementById("gameOver").style.display = "none";
-
-  // document.getElementById("grid").style.display = "grid";
 
   play();
 }

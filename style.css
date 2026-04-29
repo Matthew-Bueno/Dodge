@@ -6,7 +6,38 @@
 
 body{
     font-family: Arial, Helvetica, sans-serif;
-    background: rgb(16, 184, 235);
+    background: linear-gradient(90deg,black);
+}
+
+#overlay{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+#enemyPopup{
+    background: white;
+    color: black;
+    padding: 20px;
+    border-radius: 15px;
+    width: 300px;
+    text-align: center;
+}
+
+#enemyInfo{
+    width: 200px;
+    text-align: center;
+    border: 2px, solid, white;
+    border-radius: 15px;
+    color: white;
+}
+
+.enemyInfoContent{
+    color: black;
 }
 
 .head1{
@@ -47,14 +78,14 @@ button{
 .grid{
     display: none;
     position: relative;
-    width: 650px;
-    height: 550px;
+    width: 700px;
+    height: 700px;
     margin: 150px auto;
     border: 2px solid white;
     background:
         linear-gradient(white 1px, transparent 1px),
         linear-gradient(90deg, white 1px, transparent 1px);
-    background-size: 130px 110px;
+    background-size: 100px 100px;
 }
 
 .border{
@@ -65,7 +96,7 @@ button{
     position: absolute;
     width: 20px;
     height: 20px;
-    background: white;
+    background: linear-gradient(90deg,white, rgba(204, 204, 204, 0.952));
     border-radius: 50px;
     transition: all 0.4s ease;
 }
@@ -74,7 +105,7 @@ button{
     position: absolute;
     width: 20px;
     height: 20px;
-    background: red;
+    background: linear-gradient(90deg,red, rgb(180, 0, 0));
     border-radius: 50px;
     transition: all 1s ease;
 }
@@ -83,7 +114,7 @@ button{
     position: absolute;
     width: 20px;
     height: 20px;
-    background: grey;
+    background: linear-gradient(90deg, grey, rgb(114, 114, 114));
     border-radius: 50px;
     transition: all 0.8s ease;
 }
@@ -92,16 +123,16 @@ button{
     position: absolute;
     width: 20px;
     height: 20px;
-    background: orange;
+    background: linear-gradient(90deg, orange, rgb(209, 136, 0));
     border-radius: 50px;
-    transition: all 0.6s ease;
+    transition: all 0.8s ease;
 }
 
 #enemyPink{
     position: absolute;
     width: 20px;
     height: 20px;
-    background: pink;
+    background: linear-gradient(90deg, pink, rgb(201, 146, 155));
     border-radius: 50px;
     transition: all 0.6s ease;
 }

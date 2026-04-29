@@ -5,10 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dodge</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="">
     <script src="script.js" defer></script>
 </head>
 <body>
     <div id="container">
+        <h1 id="enemyInfo" onclick="enemyInfo()">Enemy Info</h1>
         <h1 class="head1">Dodge</h1>
         <h2 class="head1">Info:</h2>
 
@@ -22,6 +24,17 @@
         </div>
 
     <button class="play" id="startGame" onclick="play()">Start Game</button>
+    </div>
+
+    <div id="overlay">
+        <div id="enemyPopup">
+            <h2>Enemy Info</h2>
+            <p class="enemyInfoContent">🔴 Red: Follows the player</p>
+            <p class="enemyInfoContent">Grey: Follows the player</p>
+            <p class="enemyInfoContent">Orange: Follows the player</p>
+            <p class="enemyInfoContent">Pink: Follows the player</p>
+            <button onclick="closeEnemyInfo()">Close</button>
+        </div>
     </div>
     
     <div id="holder1">

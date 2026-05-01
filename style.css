@@ -6,7 +6,7 @@
 
 body{
     font-family: Arial, Helvetica, sans-serif;
-    background: linear-gradient(90deg, rgb(81, 200, 245), rgb(111, 154, 235), rgb(255, 187, 199));
+    background: linear-gradient(90deg, rgb(74, 206, 255), rgb(97, 145, 234), rgb(255, 187, 199));
 }
 
 #header{
@@ -49,9 +49,14 @@ body{
     cursor: pointer;
 }
 
-.enemyInfoContent{
+.enemyInfoBackground{
     color: black;
     padding: 10px;
+}
+
+.otherInfo{
+    font-size: 15px;
+    color: grey;
 }
 
 .head1{
@@ -94,7 +99,7 @@ button{
     position: relative;
     width: 700px;
     height: 700px;
-    margin: 150px auto;
+    margin: 114px auto;
     border: 2px solid white;
     background:
         linear-gradient(white 1px, transparent 1px),
@@ -121,7 +126,7 @@ button{
     height: 20px;
     background: linear-gradient(90deg,red, rgb(180, 0, 0));
     border-radius: 50px;
-    transition: all 1s ease;
+    transition: all 0.7s ease;
 }
 
 #enemyGrey{
@@ -130,7 +135,7 @@ button{
     height: 20px;
     background: linear-gradient(90deg, grey, rgb(114, 114, 114));
     border-radius: 50px;
-    transition: all 0.8s ease;
+    transition: all 0.4s ease;
 }
 
 #enemyOrange{
@@ -139,7 +144,7 @@ button{
     height: 20px;
     background: linear-gradient(90deg, orange, rgb(209, 136, 0));
     border-radius: 50px;
-    transition: all 0.8s ease;
+    transition: all 0.6s ease;
 }
 
 #enemyPink{

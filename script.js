@@ -218,20 +218,28 @@ function enemyPink() {
 }
 
 function enemyPinkMovment() {
-    let direction = Math.floor(Math.random() * 4);
+  let nextRow = enemyPinkRow;
+  let nextCol = enemyPinkCol;
 
-  if (direction === 0 && enemyPinkRow > 0) {
-    enemyPinkRow--;
-  } else if (direction === 1 && enemyPinkRow < 6) {
-    enemyPinkRow++;
-  } else if (direction === 2 && enemyPinkCol > 0) {
-    enemyPinkCol--;
-  } else if (direction === 3 && enemyPinkCol < 6) {
-    enemyPinkCol++;
+  if(enemyPinkRow < playerRow){
+    nextRow++;
+  } else if(enemyPinkRow > playerRow){
+    nextRow--;
   }
 
+  if(enemyPinkCol < playerCol){
+    nextCol++;
+  } else if(enemyPinkCol > playerCol){
+    nextCol--;
+  }
+
+  if(nextRow === playerRow && nextCol === playerCol){
+    return;
+  }
+
+  enemyPinkRow = nextRow;
+  enemyPinkCol = nextCol;
   enemyPink();
-  setTimeout(() => enemyHit(), 1000);
 }
 
 function enemyHit() {

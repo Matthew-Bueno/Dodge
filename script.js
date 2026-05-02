@@ -15,6 +15,8 @@ let orangeInterval;
 let pinkInterval;
 let playerHitTimeout;
 let container = document.getElementById("container"); // This is getting the container id that will be used later to hide the rules
+let countdown;
+let time = 90
 
 function play() {
   clearInterval(redInterval);
@@ -30,6 +32,20 @@ function play() {
   enemyOrange();
   enemyGrey();
   enemyRed();
+
+  // 90000
+  document.getElementById("countdown").textContent = time;
+
+  countdown = setInterval(()=> {
+    time--;
+    document.getElementById("countdown").textContent = time;
+    // stop at 0
+    if(time == 0){
+      clearInterval(countdown)
+    }
+  }, 1000)
+
+
   redInterval = setInterval(enemyRedMovement, 700);
   greyInterval = setInterval(enemyGreyMovement, 500);
   orangeInterval = setInterval(enemyOrangeMovement, 600);
@@ -58,6 +74,10 @@ function updateHearts() {
   heartsDiv.innerHTML = `<p>${heartDisplay}</p>`;
 }
 
+function times(){
+  
+}
+
 function playerMove(event) {
   // This function is used when
   let key = event.key.toLowerCase();
@@ -73,7 +93,7 @@ function playerMove(event) {
   }
 
   updatePlayerPosition();
-  let playerHitTimeout = setTimeout(() => enemyHit(), 400);
+  playerHitTimeout = setTimeout(() => enemyHit(), 400);
 }
 
 function enemyHitIndecator(){
@@ -240,6 +260,7 @@ function enemyPinkMovment() {
   enemyPinkRow = nextRow;
   enemyPinkCol = nextCol;
   enemyPink();
+  setTimeout(() => enemyHit(), 1000);
 }
 
 function enemyHit() {
@@ -315,11 +336,19 @@ function gameOver() {
   clearInterval(orangeInterval);
   clearInterval(pinkInterval);
   document.removeEventListener("keydown", playerMove);
+ clearInterval(countdown)
+  if(time == 0){
+    // WON
 
-  setTimeout(() => {
+  }else{
+
+     setTimeout(() => {
   document.getElementById("grid").style.display = "none";
   document.getElementById("gameOver").style.display = "block";
   }, 1000);
+  }
+
+ 
 }
 
 function mainMenu(){

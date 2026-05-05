@@ -23,7 +23,10 @@ function play() {
   clearInterval(greyInterval);
   container.style.display = "none";
 
-  document.getElementById("grid").style.display = "grid"; //
+  time = 90;
+
+  document.getElementById("grid").style.display = "grid";
+  document.getElementById("holder1").style.display = "flex";
 
   lives = 3;
   updateHearts();
@@ -72,10 +75,6 @@ function updateHearts() {
   }
 
   heartsDiv.innerHTML = `<p>${heartDisplay}</p>`;
-}
-
-function times(){
-  
 }
 
 function playerMove(event) {
@@ -336,7 +335,7 @@ function gameOver() {
   clearInterval(orangeInterval);
   clearInterval(pinkInterval);
   document.removeEventListener("keydown", playerMove);
- clearInterval(countdown)
+  clearInterval(countdown)
   if(time == 0){
     // WON
 
@@ -344,6 +343,7 @@ function gameOver() {
 
      setTimeout(() => {
   document.getElementById("grid").style.display = "none";
+  document.getElementById("holder1").style.display = "none";
   document.getElementById("gameOver").style.display = "block";
   }, 1000);
   }

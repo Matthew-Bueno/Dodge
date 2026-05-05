@@ -16,11 +16,15 @@ let pinkInterval;
 let playerHitTimeout;
 let container = document.getElementById("container"); // This is getting the container id that will be used later to hide the rules
 let countdown;
-let time = 90
+let time = 90;
 
 function play() {
   clearInterval(redInterval);
   clearInterval(greyInterval);
+  clearInterval(orangeInterval);
+  clearInterval(pinkInterval);
+  clearInterval(countdown);
+  document.removeEventListener("keydown", playerMove);
   container.style.display = "none";
 
   time = 90;

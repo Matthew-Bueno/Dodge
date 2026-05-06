@@ -193,8 +193,8 @@ button{
     text-align: center;
 }
 
-.flash{
-    background-color: yellow !important;
-    box-shadow: 0px 0px 15px 10px yellow !important;
+#player.flash{
+    background-color: yellow;
+    box-shadow: 0px 0px 15px 10px yellow;
     transition: all 0.1s ease;
 }

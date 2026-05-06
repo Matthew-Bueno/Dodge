@@ -19,20 +19,16 @@ let countdown;
 let time = 90;
 
 function play() {
-  clearInterval(redInterval);
-  clearInterval(greyInterval);
-  clearInterval(orangeInterval);
-  clearInterval(pinkInterval);
-  clearInterval(countdown);
-  document.removeEventListener("keydown", playerMove);
+  
+  // document.removeEventListener("keydown", playerMove);
   container.style.display = "none";
 
-  time = 90;
+ 
 
   document.getElementById("grid").style.display = "grid";
   document.getElementById("holder1").style.display = "flex";
 
-  lives = 3;
+ 
   updateHearts();
   updatePlayerPosition();
   enemyPink();
@@ -339,7 +335,7 @@ function gameOver() {
   clearInterval(orangeInterval);
   clearInterval(pinkInterval);
   document.removeEventListener("keydown", playerMove);
-  clearInterval(countdown)
+  clearInterval(countdown);
   if(time == 0){
     // WON
 
@@ -360,6 +356,7 @@ function mainMenu(){
 }
 
 function restartGame() {
+  
   playerRow = 3;
   playerCol = 3;
 
@@ -375,7 +372,22 @@ function restartGame() {
   enemyPinkRow = 0;
   enemyPinkCol = 0;
 
+  clearInterval(redInterval);
+  clearInterval(greyInterval);
+  clearInterval(orangeInterval);
+  clearInterval(pinkInterval);
+  clearInterval(countdown);
+
+  redInterval =null;
+  greyInterval = null;
+  orangeInterval = null;
+  pinkInterval = null;
+  countdown = null;
+
+   lives = 3;
+    time = 90;
+
   document.getElementById("gameOver").style.display = "none";
 
   play();
-}
+} 

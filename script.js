@@ -19,16 +19,20 @@ let countdown;
 let time = 90;
 
 function play() {
-  
-  // document.removeEventListener("keydown", playerMove);
+  clearInterval(redInterval);
+  clearInterval(greyInterval);
+  clearInterval(orangeInterval);
+  clearInterval(pinkInterval);
+  clearInterval(countdown);
+  document.removeEventListener("keydown", playerMove);
   container.style.display = "none";
 
- 
+  time = 90;
 
   document.getElementById("grid").style.display = "grid";
   document.getElementById("holder1").style.display = "flex";
 
- 
+  lives = 3;
   updateHearts();
   updatePlayerPosition();
   enemyPink();
@@ -43,15 +47,16 @@ function play() {
     time--;
     document.getElementById("countdown").textContent = time;
     // stop at 0
-    if(time == 0){
-      clearInterval(countdown)
+    if(time === 0){
+      clearInterval(countdown);
+      winGame();
     }
   }, 1000)
 
 
   redInterval = setInterval(enemyRedMovement, 700);
   greyInterval = setInterval(enemyGreyMovement, 500);
-  orangeInterval = setInterval(enemyOrangeMovement, 600);
+  orangeInterval = setInterval(enemyOrangeMovement, 700);
   pinkInterval = setInterval(enemyPinkMovment, 600);
   document.addEventListener("keydown", playerMove); // This event is used when you press down a key
 }
@@ -270,11 +275,20 @@ function enemyHit() {
   let pinkHit = playerRow === enemyPinkRow && playerCol === enemyPinkCol;
   
   if (redHit || greyHit || orangeHit || pinkHit) {
+
+    const player = document.getElementById("player");
+
+    player.classList.add("flash");
+
+    setTimeout(() =>{
+      player.classList.remove("flash")
+    }, 1200);
+
     lives--;
     updateHearts();
 
     if (lives <= 0) {
-      gameOver();
+      loseScreen();
     } else {
       clearInterval(redInterval);
       clearInterval(orangeInterval);
@@ -318,7 +332,7 @@ function enemyHit() {
         1800,
       );
       setTimeout(
-        () => (orangeInterval = setInterval(enemyOrangeMovement, 600)),
+        () => (orangeInterval = setInterval(enemyOrangeMovement, 700)),
         1800,
       );
       setTimeout(
@@ -329,34 +343,41 @@ function enemyHit() {
   }
 }
 
-function gameOver() {
+function winGame(){
+  clearInterval(redInterval);
+  clearInterval(greyInterval);
+  clearInterval(orangeInterval);
+  clearInterval(pinkInterval);
+  clearInterval(countdown);
+
+  document.removeEventListener("keydown", playerMove);
+
+  setTimeout(() => {
+    document.getElementById("grid").style.display = "none";
+    document.getElementById("holder1").style.display = "none";
+    document.getElementById("winScreen").style.display = "block";
+  }, 1000);
+}
+
+function loseScreen() {
   clearInterval(redInterval);
   clearInterval(greyInterval);
   clearInterval(orangeInterval);
   clearInterval(pinkInterval);
   document.removeEventListener("keydown", playerMove);
-  clearInterval(countdown);
-  if(time == 0){
-    // WON
+  clearInterval(countdown)
 
-  }else{
-
-     setTimeout(() => {
+  setTimeout(() => {
   document.getElementById("grid").style.display = "none";
   document.getElementById("holder1").style.display = "none";
-  document.getElementById("gameOver").style.display = "block";
+  document.getElementById("loseScreen").style.display = "block";
   }, 1000);
-  }
+  
 
  
 }
 
-function mainMenu(){
-
-}
-
 function restartGame() {
-  
   playerRow = 3;
   playerCol = 3;
 
@@ -372,22 +393,8 @@ function restartGame() {
   enemyPinkRow = 0;
   enemyPinkCol = 0;
 
-  clearInterval(redInterval);
-  clearInterval(greyInterval);
-  clearInterval(orangeInterval);
-  clearInterval(pinkInterval);
-  clearInterval(countdown);
-
-  redInterval =null;
-  greyInterval = null;
-  orangeInterval = null;
-  pinkInterval = null;
-  countdown = null;
-
-   lives = 3;
-    time = 90;
-
-  document.getElementById("gameOver").style.display = "none";
+  document.getElementById("loseScreen").style.display = "none";
+  document.getElementById("winScreen").style.display = "none";
 
   play();
-} 
+}

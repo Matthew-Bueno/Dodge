@@ -16,23 +16,15 @@ let pinkInterval;
 let playerHitTimeout;
 let container = document.getElementById("container"); // This is getting the container id that will be used later to hide the rules
 let countdown;
-let time = 90;
+let time = 10;
 
 function play() {
-  clearInterval(redInterval);
-  clearInterval(greyInterval);
-  clearInterval(orangeInterval);
-  clearInterval(pinkInterval);
-  clearInterval(countdown);
   document.removeEventListener("keydown", playerMove);
   container.style.display = "none";
-
-  time = 90;
 
   document.getElementById("grid").style.display = "grid";
   document.getElementById("holder1").style.display = "flex";
 
-  lives = 3;
   updateHearts();
   updatePlayerPosition();
   enemyPink();
@@ -48,7 +40,11 @@ function play() {
     document.getElementById("countdown").textContent = time;
     // stop at 0
     if(time === 0){
-      clearInterval(countdown);
+       clearInterval(redInterval);
+  clearInterval(greyInterval);
+  clearInterval(orangeInterval);
+  clearInterval(pinkInterval);
+  clearInterval(countdown);
       winGame();
     }
   }, 1000)
@@ -67,6 +63,11 @@ function enemyInfo(){
 
 function closeEnemyInfo(){
   document.getElementById("overlay").style.display = "none";
+}
+
+function changeColor(){
+ let body = document.querySelector("body");
+ body.classList.toggle("colorChange");
 }
 
 function updateHearts() {
@@ -287,14 +288,16 @@ function enemyHit() {
     lives--;
     updateHearts();
 
-    if (lives <= 0) {
-      loseScreen();
-    } else {
-      clearInterval(redInterval);
+    clearInterval(redInterval);
       clearInterval(orangeInterval);
       clearInterval(greyInterval);
       clearInterval(pinkInterval);
       clearTimeout(playerHitTimeout);
+
+    if (lives <= 0) {
+      loseScreen();
+    } else {
+      
 
       enemyRedRow = 6;
       enemyRedCol = 6;
@@ -344,12 +347,6 @@ function enemyHit() {
 }
 
 function winGame(){
-  clearInterval(redInterval);
-  clearInterval(greyInterval);
-  clearInterval(orangeInterval);
-  clearInterval(pinkInterval);
-  clearInterval(countdown);
-
   document.removeEventListener("keydown", playerMove);
 
   setTimeout(() => {
@@ -360,10 +357,6 @@ function winGame(){
 }
 
 function loseScreen() {
-  clearInterval(redInterval);
-  clearInterval(greyInterval);
-  clearInterval(orangeInterval);
-  clearInterval(pinkInterval);
   document.removeEventListener("keydown", playerMove);
   clearInterval(countdown)
 
@@ -372,12 +365,16 @@ function loseScreen() {
   document.getElementById("holder1").style.display = "none";
   document.getElementById("loseScreen").style.display = "block";
   }, 1000);
-  
+}
 
- 
+function mainMenu(){
+  location.reload();
 }
 
 function restartGame() {
+  lives = 3;
+ time = 10;
+
   playerRow = 3;
   playerCol = 3;
 

@@ -13,6 +13,7 @@
         <div id="header">
             <h1 id="enemyInfo" onclick="enemyInfo()">Enemy Info</h1>
             <h1 class="head1">Dodge</h1>
+            <h1 id="changeColor" onclick="changeColor()">Change Color Theme</h1>
         </div>
         
         <h2 class="head1">Info:</h2>
@@ -44,7 +45,6 @@
 
     <div id="timer">
         <div id="countdown"></div>
-        <!-- <div id="gameTimer"></div> -->
     </div>
     </div>
     
@@ -59,11 +59,13 @@
     <div id="loseScreen" style="display: none;">
         <h1>You Lose 😭</h1>
         <button onclick="restartGame()">Restart</button>
+        <button onclick="mainMenu()">Main Menu</button>
     </div>
 
     <div id="winScreen" style="display: none;">
         <h1>You Win 🎉</h1>
         <button onclick="restartGame()">Restart</button>
+        <button onclick="mainMenu()">Main Menu</button>
     </div>
 </body>
 </html>

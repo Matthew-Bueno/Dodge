@@ -16,7 +16,7 @@ let pinkInterval;
 let playerHitTimeout;
 let container = document.getElementById("container"); // This is getting the container id that will be used later to hide the rules
 let countdown;
-let time = 10;
+let time = 60;
 
 function play() {
   document.removeEventListener("keydown", playerMove);
@@ -74,13 +74,13 @@ function updateHearts() {
   // This function is to upadte the hearts as well as load them onto the HMTL screen
   const heartsDiv = document.getElementById("hearts");
 
-  let heartDisplay = "";
+  heartsDiv.innerHTML = "";
 
   for (let i = 0; i < lives; i++) {
-    heartDisplay += "♥️";
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heartsDiv.appendChild(heart);
   }
-
-  heartsDiv.innerHTML = `<p>${heartDisplay}</p>`;
 }
 
 function playerMove(event) {
@@ -295,7 +295,7 @@ function enemyHit() {
       clearTimeout(playerHitTimeout);
 
     if (lives <= 0) {
-      loseScreen();
+      loseGame();
     } else {
       
 
@@ -352,18 +352,18 @@ function winGame(){
   setTimeout(() => {
     document.getElementById("grid").style.display = "none";
     document.getElementById("holder1").style.display = "none";
-    document.getElementById("winScreen").style.display = "block";
+    document.getElementById("winScreen").style.display = "flex";
   }, 1000);
 }
 
-function loseScreen() {
+function loseGame() {
   document.removeEventListener("keydown", playerMove);
   clearInterval(countdown)
 
   setTimeout(() => {
   document.getElementById("grid").style.display = "none";
   document.getElementById("holder1").style.display = "none";
-  document.getElementById("loseScreen").style.display = "block";
+  document.getElementById("loseScreen").style.display = "flex";
   }, 1000);
 }
 
@@ -373,7 +373,7 @@ function mainMenu(){
 
 function restartGame() {
   lives = 3;
- time = 10;
+ time = 60;
 
   playerRow = 3;
   playerCol = 3;

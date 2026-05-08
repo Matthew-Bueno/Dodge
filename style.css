@@ -8,8 +8,13 @@ body{
     font-family: Arial, Helvetica, sans-serif;
     background: linear-gradient(90deg, rgb(84, 206, 251), rgb(97, 145, 234), rgb(255, 187, 199));
 }
+
 body.colorChange{
     background: black;
+}
+
+#container{
+    margin-top: 60px;
 }
 
 #header{
@@ -17,6 +22,46 @@ body.colorChange{
     align-items: center;
     justify-content: center;
     position: relative;
+}
+
+#enemyInfo{
+    position: absolute;
+    left: 20px;
+    width: 200px;
+    text-align: center;
+    border: 2px, solid, white;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+}
+
+.head1{
+    text-align: center;
+    color: white;
+}
+
+#changeColor{
+    position: absolute;
+    right: 20px;
+    width: 345px;
+    text-align: center;
+    border: 2px, solid, white;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+}
+
+#rules{
+    width: 450px;
+    border: 3px solid white;
+    padding: 20px;
+    text-align: left;
+    margin: 20px auto;
+}
+
+#rules, p{
+    margin-top: 10px;
+    color: white;
 }
 
 #overlay{
@@ -41,71 +86,63 @@ body.colorChange{
     text-align: center;
 }
 
-#enemyInfo{
-    position: absolute;
-    left: 20px;
-    width: 200px;
-    text-align: center;
-    border: 2px, solid, white;
-    border-radius: 5px;
-    color: white;
-    cursor: pointer;
-}
-
 .enemyInfoBackground{
     color: black;
     padding: 10px;
 }
 
-#changeColor{
-    position: absolute;
-    right: 20px;
-    width: 345px;
-    text-align: center;
-    border: 2px, solid, white;
-    border-radius: 5px;
-    color: white;
-    cursor: pointer;
-}
-
-.otherInfo{
-    font-size: 15px;
-    color: grey;
-}
-
-.head1{
-    text-align: center;
-    color: white;
-}
-
-#container{
-    margin-top: 60px;
-}
-
-#rules{
-    width: 450px;
-    border: 3px solid white;
-    padding: 20px;
-    text-align: left;
-    margin: 20px auto;
-}
-
-#rules, p{
-    margin-top: 10px;
-    color: white;
-}
-
-button{
-    background: white;
-    border: white;
-    color: rgb(3, 178, 231);
-    border-radius: 8px;
-    font-size: 18px;
+#holder1{
     display: flex;
-    justify-self: center;
-    cursor: pointer;
-    margin: 10px;
-    padding: 2px;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin-top: 25px;
+}
+
+#hearts{
+    display: flex;
+    gap: 30px;
+    position: absolute;
+    left: 20px;
+}
+
+.heart{
+    position: relative;
+    width: 22px;
+    height: 22px;
+    background: linear-gradient(red, rgb(255, 124, 124));
+    transform: rotate(-45deg);
+    box-shadow: 0px 0px 15px 5px red;
+}
+
+.heart::before{
+    content: "";
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    background: red;
+    box-shadow: 0px 0px 15px 5px red;
+    border-radius: 50px;
+    top: -12px;
+    left: 0px;
+}
+
+.heart::after{
+    content: "";
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    background: linear-gradient(red, red, red, red, red, rgb(255, 124, 124));
+    box-shadow: 0px 0px 15px 2px red;
+    border-radius: 50px;
+    top: 0px;
+    left: 12px;
+}
+
+#timer{
+    text-align: center;
+    font-size: 38px;
+    color: white;
 }
 
 .grid{
@@ -121,17 +158,19 @@ button{
     background-size: 100px 100px;
 }
 
-.border{
-    border: 1px solid white;
-}
-
 #player{
     position: absolute;
     width: 20px;
     height: 20px;
     background: linear-gradient(90deg,white, rgba(204, 204, 204, 0.952));
-    box-shadow: 0px 0px 20px 0px white;
+    box-shadow: 0px 0px 20px 5px white;
     border-radius: 50px;
+    transition: all 0.3s ease;
+}
+
+#player.flash{
+    background: yellow;
+    box-shadow: 0px 0px 20px 10px yellow;
     transition: all 0.3s ease;
 }
 
@@ -140,7 +179,7 @@ button{
     width: 20px;
     height: 20px;
     background: linear-gradient(90deg,red, rgb(180, 0, 0));
-    box-shadow: 0px 0px 20px 0px red;
+    box-shadow: 0px 0px 20px 5px red;
     border-radius: 50px;
     transition: all 0.7s ease;
 }
@@ -150,7 +189,7 @@ button{
     width: 20px;
     height: 20px;
     background: linear-gradient(90deg, grey, rgb(114, 114, 114));
-    box-shadow: 0px 0px 20px 0px grey;
+    box-shadow: 0px 0px 20px 5px grey;
     border-radius: 50px;
     transition: all 0.4s ease;
 }
@@ -160,7 +199,7 @@ button{
     width: 20px;
     height: 20px;
     background: linear-gradient(90deg, orange, rgb(209, 136, 0));
-    box-shadow: 0px 0px 20px 0px orange;
+    box-shadow: 0px 0px 20px 5px orange;
     border-radius: 50px;
     transition: all 0.6s ease;
 }
@@ -170,45 +209,54 @@ button{
     width: 20px;
     height: 20px;
     background: linear-gradient(90deg, pink, rgb(201, 146, 155));
-    box-shadow: 0px 0px 20px 0px pink;
+    box-shadow: 0px 0px 20px 5px pink;
     border-radius: 50px;
     transition: all 0.6s ease;
 }
 
-#holder1{
-    display: flex;
+#loseScreen,
+#winScreen{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    display: none;
     justify-content: center;
     align-items: center;
-    position: relative;
-    margin-top: 10px;
-}
-
-#hearts{
-    font-size: 38px;
-    position: absolute;
-    left: 20px;
-}
-
-#timer{
     text-align: center;
-    font-size: 38px;
-    color: white;
+    background: linear-gradient(90deg, rgb(84, 206, 251), rgb(97, 145, 234), rgb(255, 187, 199));
 }
 
-#loseScreen {
+#loseScreen h1,
+#winScreen h1{
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
     background: white;
-    color: black;
-    text-align: center;
 }
 
-#winScreen {
+.screenCard{
     background: white;
-    color: black;
+    padding: 30px;
+    border-radius: 16px;
     text-align: center;
+    box-shadow: 5px 5px 30px 0px black;
 }
 
-#player.flash{
-    background-color: yellow;
-    box-shadow: 0px 0px 15px 10px yellow;
-    transition: all 0.3s ease;
+button{
+    background: white;
+    border: white;
+    color: rgb(3, 178, 231);
+    border-radius: 8px;
+    font-size: 18px;
+    display: flex;
+    justify-self: center;
+    cursor: pointer;
+    margin: 10px;
+    padding: 2px;
+}
+
+.border{
+    border: 1px solid white;
 }

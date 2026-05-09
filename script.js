@@ -25,6 +25,7 @@ function play() {
   document.getElementById("grid").style.display = "grid";
   document.getElementById("holder1").style.display = "flex";
 
+  console.log("play");
   updateHearts();
   updatePlayerPosition();
   enemyPink();
@@ -35,20 +36,19 @@ function play() {
   // 90000
   document.getElementById("countdown").textContent = time;
 
-  countdown = setInterval(()=> {
+  countdown = setInterval(() => {
     time--;
     document.getElementById("countdown").textContent = time;
     // stop at 0
-    if(time === 0){
-       clearInterval(redInterval);
-  clearInterval(greyInterval);
-  clearInterval(orangeInterval);
-  clearInterval(pinkInterval);
-  clearInterval(countdown);
+    if (time === 0) {
+      clearInterval(redInterval);
+      clearInterval(greyInterval);
+      clearInterval(orangeInterval);
+      clearInterval(pinkInterval);
+      clearInterval(countdown);
       winGame();
     }
-  }, 1000)
-
+  }, 1000);
 
   redInterval = setInterval(enemyRedMovement, 700);
   greyInterval = setInterval(enemyGreyMovement, 500);
@@ -57,20 +57,26 @@ function play() {
   document.addEventListener("keydown", playerMove); // This event is used when you press down a key
 }
 
-function enemyInfo(){
+function enemyInfo() {
   document.getElementById("overlay").style.display = "flex";
 }
 
-function closeEnemyInfo(){
+function closeEnemyInfo() {
   document.getElementById("overlay").style.display = "none";
 }
 
-function changeColor(){
- let body = document.querySelector("body");
- body.classList.toggle("colorChange");
+function changeColor() {
+  let body = document.querySelector("body");
+  body.classList.toggle("colorChange");
+  document.getElementById("loseScreen").classList.toggle("colorChange");
+  document.getElementById("winScreen").classList.toggle("colorChange");
+
+  // localstorage
+  // localStorage.setItem("color", "colorChange")
 }
 
 function updateHearts() {
+  console.log("updateHearts", lives);
   // This function is to upadte the hearts as well as load them onto the HMTL screen
   const heartsDiv = document.getElementById("hearts");
 
@@ -98,12 +104,11 @@ function playerMove(event) {
   }
 
   updatePlayerPosition();
+  console.log("playerMove");
   playerHitTimeout = setTimeout(() => enemyHit(), 400);
 }
 
-function enemyHitIndecator(){
-
-}
+function enemyHitIndecator() {}
 
 function updatePlayerPosition() {
   const player = document.getElementById("player");
@@ -133,7 +138,8 @@ function enemyRed() {
   enemyRed.style.transform = `translate(${enemyRedCol * enemyRedcellWidth + offsetX}px, ${enemyRedRow * enemyRedcellHeight + offsetY}px)`;
 }
 
-function enemyRedMovement() { // enemy red movement
+function enemyRedMovement() {
+  // enemy red movement
   if (enemyRedRow < playerRow) {
     enemyRedRow++;
   } else if (enemyRedRow > playerRow) {
@@ -147,6 +153,7 @@ function enemyRedMovement() { // enemy red movement
   }
 
   enemyRed();
+  console.log("enemyRed");
   setTimeout(() => enemyHit(), 1000);
 }
 
@@ -164,7 +171,8 @@ function enemyGrey() {
   enemyGrey.style.transform = `translate(${enemyGreyCol * enemyGreycellWidth + offsetX}px, ${enemyGreyRow * enemyGreycellHeight + offsetY}px)`;
 }
 
-function enemyGreyMovement() { // enemy grey movement
+function enemyGreyMovement() {
+  // enemy grey movement
   let direction = Math.floor(Math.random() * 4);
 
   if (direction === 0 && enemyGreyRow > 0) {
@@ -178,6 +186,7 @@ function enemyGreyMovement() { // enemy grey movement
   }
 
   enemyGrey();
+  console.log("grey");
   setTimeout(() => enemyHit(), 1000);
 }
 
@@ -206,25 +215,26 @@ function enemyOrangeMovement() {
     if (enemyOrangeRow > 0 && enemyOrangeCol < 6) {
       enemyOrangeRow--;
       enemyOrangeCol++;
-    }else enemyOrangeMovement()
+    } else enemyOrangeMovement();
   } else if (direction === 1) {
     if (enemyOrangeRow < 6 && enemyOrangeCol < 6) {
       enemyOrangeRow++;
       enemyOrangeCol++;
-    } else enemyOrangeMovement()
+    } else enemyOrangeMovement();
   } else if (direction === 2) {
     if (enemyOrangeRow > 0 && enemyOrangeCol > 0) {
       enemyOrangeRow--;
       enemyOrangeCol--;
-     }else enemyOrangeMovement()
+    } else enemyOrangeMovement();
   } else if (direction === 3) {
     if (enemyOrangeRow < 6 && enemyOrangeCol > 0) {
       enemyOrangeRow++;
       enemyOrangeCol--;
-     }else enemyOrangeMovement()
+    } else enemyOrangeMovement();
   }
 
   enemyOrange();
+  console.log("orange");
   setTimeout(() => enemyHit(), 1000);
 }
 
@@ -246,25 +256,26 @@ function enemyPinkMovment() {
   let nextRow = enemyPinkRow;
   let nextCol = enemyPinkCol;
 
-  if(enemyPinkRow < playerRow){
+  if (enemyPinkRow < playerRow) {
     nextRow++;
-  } else if(enemyPinkRow > playerRow){
+  } else if (enemyPinkRow > playerRow) {
     nextRow--;
   }
 
-  if(enemyPinkCol < playerCol){
+  if (enemyPinkCol < playerCol) {
     nextCol++;
-  } else if(enemyPinkCol > playerCol){
+  } else if (enemyPinkCol > playerCol) {
     nextCol--;
   }
 
-  if(nextRow === playerRow && nextCol === playerCol){
+  if (nextRow === playerRow && nextCol === playerCol) {
     return;
   }
 
   enemyPinkRow = nextRow;
   enemyPinkCol = nextCol;
   enemyPink();
+  console.log("pink");
   setTimeout(() => enemyHit(), 1000);
 }
 
@@ -274,30 +285,31 @@ function enemyHit() {
   let greyHit = playerRow === enemyGreyRow && playerCol === enemyGreyCol;
   let orangeHit = playerRow === enemyOrangeRow && playerCol === enemyOrangeCol;
   let pinkHit = playerRow === enemyPinkRow && playerCol === enemyPinkCol;
-  
-  if (redHit || greyHit || orangeHit || pinkHit) {
 
+  if (redHit || greyHit || orangeHit || pinkHit) {
     const player = document.getElementById("player");
 
     player.classList.add("flash");
 
-    setTimeout(() =>{
-      player.classList.remove("flash")
+    setTimeout(() => {
+      player.classList.remove("flash");
     }, 1200);
 
     lives--;
+    console.log("enemyHit");
     updateHearts();
 
     clearInterval(redInterval);
-      clearInterval(orangeInterval);
-      clearInterval(greyInterval);
-      clearInterval(pinkInterval);
-      clearTimeout(playerHitTimeout);
+    clearInterval(orangeInterval);
+    clearInterval(greyInterval);
+    clearInterval(pinkInterval);
+    clearTimeout(playerHitTimeout);
+     
 
-    if (lives <= 0) {
+    if (lives === 0) {
       loseGame();
     } else {
-      
+
 
       enemyRedRow = 6;
       enemyRedCol = 6;
@@ -346,7 +358,7 @@ function enemyHit() {
   }
 }
 
-function winGame(){
+function winGame() {
   document.removeEventListener("keydown", playerMove);
 
   setTimeout(() => {
@@ -358,22 +370,23 @@ function winGame(){
 
 function loseGame() {
   document.removeEventListener("keydown", playerMove);
-  clearInterval(countdown)
+  clearInterval(countdown);
 
   setTimeout(() => {
-  document.getElementById("grid").style.display = "none";
-  document.getElementById("holder1").style.display = "none";
-  document.getElementById("loseScreen").style.display = "flex";
+    document.getElementById("grid").style.display = "none";
+    document.getElementById("holder1").style.display = "none";
+    document.getElementById("loseScreen").style.display = "flex";
   }, 1000);
 }
 
-function mainMenu(){
+function mainMenu() {
   location.reload();
 }
 
 function restartGame() {
+  location.reload();
   lives = 3;
- time = 60;
+  time = 60;
 
   playerRow = 3;
   playerCol = 3;

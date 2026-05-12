@@ -9,7 +9,7 @@ let enemyOrangeRow = 0; // What row the orange enemy will spawn
 let enemyOrangeCol = 6; // What column the orange enemy will spawn
 let enemyPinkRow = 0; // What row the white enemy will spawn
 let enemyPinkCol = 0; // What column the white enemy will spawn
-let redInterval;
+let redInterval; 
 let greyInterval;
 let orangeInterval;
 let pinkInterval;
@@ -17,6 +17,12 @@ let playerHitTimeout;
 let container = document.getElementById("container"); // This is getting the container id that will be used later to hide the rules
 let countdown;
 let time = 60;
+
+if (localStorage.getItem("color") === "colorChange"){
+  document.body.classList.add("colorChange");
+  document.getElementById("loseScreen").classList.add("colorChange");
+  document.getElementById("winScreen").classList.add("colorChange");
+}
 
 function play() {
   document.removeEventListener("keydown", playerMove);
@@ -32,8 +38,7 @@ function play() {
   enemyOrange();
   enemyGrey();
   enemyRed();
-
-  // 90000
+  
   document.getElementById("countdown").textContent = time;
 
   countdown = setInterval(() => {
@@ -72,7 +77,11 @@ function changeColor() {
   document.getElementById("winScreen").classList.toggle("colorChange");
 
   // localstorage
-  // localStorage.setItem("color", "colorChange")
+  if(body.classList.contains("colorChange")){
+    localStorage.setItem("color", "colorChange");
+  } else {
+    localStorage.removeItem("color");
+  }
 }
 
 function updateHearts() {
@@ -381,30 +390,4 @@ function loseGame() {
 
 function mainMenu() {
   location.reload();
-}
-
-function restartGame() {
-  location.reload();
-  lives = 3;
-  time = 60;
-
-  playerRow = 3;
-  playerCol = 3;
-
-  enemyRedRow = 6;
-  enemyRedCol = 6;
-
-  enemyGreyRow = 6;
-  enemyGreyCol = 0;
-
-  enemyOrangeRow = 0;
-  enemyOrangeCol = 6;
-
-  enemyPinkRow = 0;
-  enemyPinkCol = 0;
-
-  document.getElementById("loseScreen").style.display = "none";
-  document.getElementById("winScreen").style.display = "none";
-
-  play();
 }

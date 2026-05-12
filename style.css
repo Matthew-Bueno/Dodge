@@ -28,7 +28,7 @@ body.colorChange,#loseScreen.colorChange,
 #enemyInfo{
     position: absolute;
     left: 20px;
-    width: 200px;
+    width: 450px;
     text-align: center;
     border: 2px, solid, white;
     border-radius: 5px;
